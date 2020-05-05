@@ -5,8 +5,9 @@ using System.Text;
 
 namespace Car_Rental.Interfaces
 {
-   public interface IRentalRepository
+   public interface IRentalRepository : IRepository<Rental>
     {
         void Add(Rental rental);
+        Rental GetRentalWithName(Guid name);
     }
 }

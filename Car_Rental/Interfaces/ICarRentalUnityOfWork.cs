@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Car_Rental.Interfaces
 {
-    public interface ICarRentalUnityOfWork 
+    public interface ICarRentalUnityOfWork : IDisposable
     {
         ICarRepository CarRepository { get; }
         IDriverRepository DriverRepository { get; }

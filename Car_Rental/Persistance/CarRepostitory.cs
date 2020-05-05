@@ -14,7 +14,6 @@ namespace Car_Rental.Persistance
     {
         public CarRepostitory(CarRentalContext context) : base (context)
         {
-
         }
         public Car GetCarWithName(string name)
         {

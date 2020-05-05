@@ -7,9 +7,8 @@ using System.Text;
 
 namespace Car_Rental.Persistance
 {
-    class CarRentalUnityOfWork
-    {
-        public class CarRentalUnityofWork : ICarRentalUnityOfWork
+
+      class CarRentalUnityofWork : ICarRentalUnityOfWork
         {
             public CarRentalContext Context { get; protected set; }
             public ICarRepository CarRepository { get; }
@@ -51,4 +50,4 @@ namespace Car_Rental.Persistance
             }
         }
     }
-}
+

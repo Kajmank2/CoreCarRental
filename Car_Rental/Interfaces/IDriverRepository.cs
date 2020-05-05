@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Car_Rental.Interfaces
 {
-   public interface IDriverRepository
+   public interface IDriverRepository : IRepository<Driver>
     {
-        public void Add(Driver entity);
+        Driver GetDriverWithName(string name);
     }
 }
