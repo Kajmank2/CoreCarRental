@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Car_Rental.Commands
 {
-   public interface ICommand
+   public interface ICommandHandler
     {
     }
 }

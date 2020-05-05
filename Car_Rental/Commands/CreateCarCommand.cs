@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Car_Rental.Commands.Handlers
 {
-  public  class CreateCarCommand : ICommand
+  public  class CreateCarCommand : ICommandHandler
     {
         public Guid CarId { get; set; }
         public string RegistrationNumber { get; set; }

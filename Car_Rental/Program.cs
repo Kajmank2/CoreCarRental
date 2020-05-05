@@ -9,8 +9,10 @@ namespace Car_Rental
     {
         static void Main(string[] args)
         {
-           CarRentalContext context = new CarRentalContext();
-           
+
+
+            CarRentalContext context = new CarRentalContext();
+
             ClearDatabase(context);
             Car car = new Car()
             {
@@ -18,7 +20,7 @@ namespace Car_Rental
                 RegistrationNumber = "WRa 1321",
                 TotalDistance = 120000,
                 XPosition = 12.2321,
-                YPosition = 12.321
+                YPosition = 12.321,
             };
             Driver driver = new Driver()
             {
@@ -35,7 +37,7 @@ namespace Car_Rental
                 Driver = driver,
                 Car = car
             };
-       
+
             using (var unityofWork = new CarRentalUnityofWork(context))
             {
                 var scenarioHelper = new ScenarioHelper(unityofWork);
@@ -49,11 +51,13 @@ namespace Car_Rental
                 Guid car1 = scenarioHelper.CreateCar("KAROL", 1232121);
                 Guid driver1 = scenarioHelper.CreateDriver("Leszek", "Jemiołek", "1232131asc");
                 Guid rental1 = scenarioHelper.CreateRental(DateTime.Now, DateTime.Now.AddDays(1), 12330, driver.DriverId, car.CarId);
+
+                Guid reservation = scenarioHelper.MakeReservation(car.CarId, driver.DriverId, 1200, DateTime.Now, DateTime.Now.AddDays(1));
                 Console.WriteLine("Witam SCENARIO HELPER GOONA WINA THIS ");
                 Console.WriteLine("Rental Created");
             }
             Console.ReadKey();
-           
+
         }
         private static void ClearDatabase(CarRentalContext context)
         {

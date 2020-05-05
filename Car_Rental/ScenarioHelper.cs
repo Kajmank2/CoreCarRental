@@ -8,14 +8,14 @@ using System.Text;
 
 namespace Car_Rental
 {
-   class ScenarioHelper
+    class ScenarioHelper
     {
         private CarRentalUnityofWork _unitOfWork = null;
         public ScenarioHelper(CarRentalUnityofWork unitOfWork)
         {
             this._unitOfWork = unitOfWork;
         }
-        public Guid CreateCar( string registrationNumber, int TotalDist)
+        public Guid CreateCar(string registrationNumber, int TotalDist)
         {
             Guid carId = Guid.NewGuid();
             CreateCarCommand command = new CreateCarCommand()
@@ -43,7 +43,7 @@ namespace Car_Rental
             handler.Execute(command);
             return driverId;
         }
-        public Guid CreateRental(DateTime startDateTime,DateTime stopDateTime,decimal Total ,Guid driverId, Guid carId)
+        public Guid CreateRental(DateTime startDateTime, DateTime stopDateTime, decimal Total, Guid driverId, Guid carId)
         {
             Guid rentalId = Guid.NewGuid();
             CreateRentalCommand command = new CreateRentalCommand()
@@ -57,6 +57,23 @@ namespace Car_Rental
             CreateRentalCommandHandler handler = new CreateRentalCommandHandler(this._unitOfWork);
             handler.Execute(command);
             return rentalId;
-        }   
+        }
+        public Guid MakeReservation(Guid carId, Guid driverId, decimal total, DateTime startDateTime, DateTime stopDateTime)
+        {
+            Guid rentalId = Guid.NewGuid();
+            MakeReservationCommand command = new MakeReservationCommand()
+            {
+                RentalId = rentalId,
+                StartDateTime = startDateTime,
+                StopDateTime = stopDateTime,
+                Total = total,
+                CarId = carId,
+                DriverId = driverId
+            };
+            MakeReservationCommandHandler handler = new MakeReservationCommandHandler(this._unitOfWork);
+            handler.Execute(command);
+
+            return rentalId;
+        }
     }
 }

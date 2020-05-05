@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Car_Rental.Commands
 {
-   public interface ICommandHandler<TCommand> where TCommand : ICommand
+   public interface ICommandHandler<TCommand> where TCommand : ICommandHandler
     {
         void Execute(TCommand command);
     }

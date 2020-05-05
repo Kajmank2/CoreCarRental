@@ -25,7 +25,7 @@ namespace Car_Rental.Persistance
 
             public void Commit()
             {
-                Context.SaveChanges();
+                 Context.SaveChanges();
             }
             public void Dispose()
             {
