@@ -12,6 +12,7 @@ namespace Car_Rental.Model.Write
         public double YPosition { get; set; }
         public int CurrentDistance { get; set; }
         public int TotalDistance { get; set; }
+        public Status Status { get; set; }
         public ICollection<Rental> Rentals { get; set; }
     }
     public enum Status

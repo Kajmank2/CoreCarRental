@@ -51,8 +51,10 @@ namespace Car_Rental
                 Guid car1 = scenarioHelper.CreateCar("KAROL", 1232121);
                 Guid driver1 = scenarioHelper.CreateDriver("Leszek", "Jemiołek", "1232131asc");
                 Guid rental1 = scenarioHelper.CreateRental(DateTime.Now, DateTime.Now.AddDays(1), 12330, driver.DriverId, car.CarId);
-
-                Guid reservation = scenarioHelper.MakeReservation(car.CarId, driver.DriverId, 1200, DateTime.Now, DateTime.Now.AddDays(1));
+                context.SaveChanges();
+                Console.WriteLine("(-+-)");
+                Console.ReadKey();
+                Guid reservation = scenarioHelper.MakeReservation(car1, driver1, 1200, DateTime.Now, DateTime.Now.AddDays(1));
                 Console.WriteLine("Witam SCENARIO HELPER GOONA WINA THIS ");
                 Console.WriteLine("Rental Created");
             }

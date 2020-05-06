@@ -9,7 +9,7 @@ namespace Car_Rental.Interfaces
         ICarRepository CarRepository { get; }
         IDriverRepository DriverRepository { get; }
         IRentalRepository RentalRepository { get; }
-
+        IRentalViewRepository RentalViewRepository { get; }
         void Commit();
         void RejectChanges();
     }

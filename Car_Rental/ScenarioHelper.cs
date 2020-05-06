@@ -64,11 +64,12 @@ namespace Car_Rental
             MakeReservationCommand command = new MakeReservationCommand()
             {
                 RentalId = rentalId,
+                CarId = carId,
+                DriverId = driverId,
                 StartDateTime = startDateTime,
                 StopDateTime = stopDateTime,
                 Total = total,
-                CarId = carId,
-                DriverId = driverId
+               
             };
             MakeReservationCommandHandler handler = new MakeReservationCommandHandler(this._unitOfWork);
             handler.Execute(command);

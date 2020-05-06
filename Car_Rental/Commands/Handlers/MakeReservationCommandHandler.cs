@@ -11,7 +11,6 @@ namespace Car_Rental.Commands.Handlers
     {
         public MakeReservationCommandHandler(ICarRentalUnityOfWork unityOfWork): base(unityOfWork)
         {
-
         }
 
         public void Execute(MakeReservationCommand command)
@@ -33,20 +32,25 @@ namespace Car_Rental.Commands.Handlers
                 StartDateTime = command.StartDateTime,
                 StopDateTime = command.StopDateTime,
                 Total = command.Total,
-
+                CarId = command.CarId,
+                DriverId = command.DriverId,
+                Car = car,
+                Driver = driver
             };
             this._unityOfWork.RentalRepository.Insert(rental);
-
+            this._unityOfWork.Commit();
+            //Upadate read Stack
             var rentalView = new RentalView()
             {
-                RentalId = command.RentalId,
-                StartDateTime = command.StartDateTime,
+                RentalId = rental.RentalId,
+                StartDateTime = rental.StartDateTime,
                 StopDateTime = command.StopDateTime,
-                Total = command.Total,
-                CarId = command.CarId,
-                DriverId = command.DriverId
+                Total = rental.Total,
+                CarId = car.CarId,
+                DriverId = driver.DriverId, 
+                RegistrationNumber = car.RegistrationNumber
             };
-            this._unityOfWork.RentalRepository.Insert(rental);
+            this._unityOfWork.RentalViewRepository.Insert(rentalView);
             this._unityOfWork.Commit();
         }
     }

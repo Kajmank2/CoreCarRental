@@ -8,46 +8,48 @@ using System.Text;
 namespace Car_Rental.Persistance
 {
 
-      class CarRentalUnityofWork : ICarRentalUnityOfWork
+    class CarRentalUnityofWork : ICarRentalUnityOfWork
+    {
+        public CarRentalContext Context { get; protected set; }
+        public ICarRepository CarRepository { get; }
+        public IDriverRepository DriverRepository { get; }
+        public IRentalRepository RentalRepository { get; }
+        public IRentalViewRepository RentalViewRepository { get; set; }
+
+        public CarRentalUnityofWork(CarRentalContext context)
         {
-            public CarRentalContext Context { get; protected set; }
-            public ICarRepository CarRepository { get; }
-            public IDriverRepository DriverRepository { get; }
-            public IRentalRepository RentalRepository { get; }
+            this.Context = context;
+            this.CarRepository = new CarRepostitory(this.Context);
+            this.DriverRepository = new DriverRepository(this.Context);
+            this.RentalRepository = new RentalRepostiory(this.Context);
+            this.RentalViewRepository = new RentalViewRepository(this.Context);
+        }
 
-            public CarRentalUnityofWork(CarRentalContext context)
+        public void Commit()
+        {
+            Context.SaveChanges();
+        }
+        public void Dispose()
+        {
+            Context.Dispose();
+        }
+        public void RejectChanges()
+        {
+            foreach (var entry in Context.ChangeTracker.Entries()
+         .Where(e => e.State != EntityState.Unchanged))
             {
-                this.Context = context;
-                this.CarRepository = new CarRepostitory(this.Context);
-                this.DriverRepository = new DriverRepository(this.Context);
-                this.RentalRepository = new RentalRepostiory(this.Context);
-            }
-
-            public void Commit()
-            {
-                 Context.SaveChanges();
-            }
-            public void Dispose()
-            {
-                Context.Dispose();
-            }
-            public void RejectChanges()
-            {
-                foreach (var entry in Context.ChangeTracker.Entries()
-             .Where(e => e.State != EntityState.Unchanged))
+                switch (entry.State)
                 {
-                    switch (entry.State)
-                    {
-                        case EntityState.Added:
-                            entry.State = EntityState.Detached;
-                            break;
-                        case EntityState.Modified:
-                        case EntityState.Deleted:
-                            entry.Reload();
-                            break;
-                    }
+                    case EntityState.Added:
+                        entry.State = EntityState.Detached;
+                        break;
+                    case EntityState.Modified:
+                    case EntityState.Deleted:
+                        entry.Reload();
+                        break;
                 }
             }
         }
     }
+}
 
