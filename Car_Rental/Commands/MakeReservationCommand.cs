@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Car_Rental.Commands
 {
-   public class MakeReservationCommand : ICommandHandler
+   public class MakeReservationCommand : ICommand
     {
         public Guid RentalId { get; set; }
         public Guid CarId { get; set; }

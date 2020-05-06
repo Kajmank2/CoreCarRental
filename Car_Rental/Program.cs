@@ -1,4 +1,5 @@
-﻿using Car_Rental.Interfaces;
+﻿using Car_Rental.Commands.Handlers;
+using Car_Rental.Interfaces;
 using Car_Rental.Model.Write;
 using Car_Rental.Persistance;
 using System;
@@ -48,7 +49,7 @@ namespace Car_Rental
                 Console.WriteLine("Hejka ");
                 Console.ReadKey();
 
-                Guid car1 = scenarioHelper.CreateCar("KAROL", 1232121);
+                Guid car1 = scenarioHelper.CreateCar("KAROL", 1232121,Status.Zarezerwowany);
                 Guid driver1 = scenarioHelper.CreateDriver("Leszek", "Jemiołek", "1232131asc");
                 Guid rental1 = scenarioHelper.CreateRental(DateTime.Now, DateTime.Now.AddDays(1), 12330, driver.DriverId, car.CarId);
                 context.SaveChanges();
@@ -57,9 +58,11 @@ namespace Car_Rental
                 Guid reservation = scenarioHelper.MakeReservation(car1, driver1, 1200, DateTime.Now, DateTime.Now.AddDays(1));
                 Console.WriteLine("Witam SCENARIO HELPER GOONA WINA THIS ");
                 Console.WriteLine("Rental Created");
+                scenarioHelper.ReturnCar(reservation, car1);
+                Console.WriteLine("After Save");
             }
             Console.ReadKey();
-
+            
         }
         private static void ClearDatabase(CarRentalContext context)
         {

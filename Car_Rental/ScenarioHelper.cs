@@ -15,14 +15,15 @@ namespace Car_Rental
         {
             this._unitOfWork = unitOfWork;
         }
-        public Guid CreateCar(string registrationNumber, int TotalDist)
+        public Guid CreateCar(string registrationNumber, int TotalDist,Status status)
         {
             Guid carId = Guid.NewGuid();
             CreateCarCommand command = new CreateCarCommand()
             {
                 CarId = carId,
                 RegistrationNumber = registrationNumber,
-                TotalDistance = TotalDist
+                TotalDistance = TotalDist,
+                Status = status
             };
             CreateCarCommandHandler handler = new CreateCarCommandHandler(this._unitOfWork);
             handler.Execute(command);
@@ -37,7 +38,8 @@ namespace Car_Rental
                 DriverId = driverId,
                 FirstName = firstName,
                 LicenceNumber = licenceNumber,
-                SecondName = secondName
+                SecondName = secondName,
+               
             };
             CreateDriverCommandHandler handler = new CreateDriverCommandHandler(this._unitOfWork);
             handler.Execute(command);
@@ -76,5 +78,16 @@ namespace Car_Rental
 
             return rentalId;
         }
+        public void ReturnCar(Guid rentalId, Guid carId)
+        {
+            ReturnCarCommand command = new ReturnCarCommand()
+            {
+                carId = carId,
+                reservationId = rentalId
+            };
+            ReturnCarCommandHandler handler = new ReturnCarCommandHandler(this._unitOfWork);
+            handler.Execute(command);
+        }
+   
     }
 }

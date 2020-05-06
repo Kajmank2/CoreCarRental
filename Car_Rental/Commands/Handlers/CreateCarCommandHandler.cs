@@ -24,7 +24,8 @@ namespace Car_Rental.Commands.Handlers
                 CarId = command.CarId,
                 RegistrationNumber = command.RegistrationNumber,
                 TotalDistance = command.TotalDistance,
-                CurrentDistance = command.CurrentDistance
+                CurrentDistance = command.CurrentDistance,
+                Statuss = command.Status
             };
             this._unityOfWork.CarRepository.Insert(car);
             this._unityOfWork.Commit();

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Car_Rental.Commands
 {
-   public class CreateRentalCommand :ICommandHandler
+   public class CreateRentalCommand :ICommand
     {
         public Guid RentalId { get; set; }
         public DateTime StartDateTime { get; set; }

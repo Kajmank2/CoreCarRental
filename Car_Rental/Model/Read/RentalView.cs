@@ -17,6 +17,7 @@ namespace Car_Rental.Model.Read
         public Driver Driver { get; set; }
         public Car Car { get; set; }
         public Guid CarId { get; set; }
+        public Status Status { get; set; }
         public string RegistrationNumber { get; set; }
         public double StartXPosition { get; set; }
         public double StartYPosition { get; set; }
