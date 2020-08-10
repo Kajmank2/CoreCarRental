@@ -60,6 +60,8 @@ namespace Car_Rental
                 Console.WriteLine("Rental Created");
                 scenarioHelper.ReturnCar(reservation, car1);
                 Console.WriteLine("After Save");
+                scenarioHelper.ShowCar();
+                scenarioHelper.ShowDrivers();
             }
             Console.ReadKey();
             

@@ -1,7 +1,10 @@
 ﻿using Car_Rental.Commands;
 using Car_Rental.Commands.Handlers;
+using Car_Rental.DTO;
 using Car_Rental.Model.Write;
 using Car_Rental.Persistance;
+using Car_Rental.Queries;
+using Car_Rental.Queries.Handlers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +18,39 @@ namespace Car_Rental
         {
             this._unitOfWork = unitOfWork;
         }
-        public Guid CreateCar(string registrationNumber, int TotalDist,Status status)
+        public void ShowDrivers()
+        {
+            Console.WriteLine("Drivers");
+            Console.WriteLine("==============\n");
+            GetAllDriversQuery query = new GetAllDriversQuery();
+            GetAllDriversQueryHandlers handler = new GetAllDriversQueryHandlers(this._unitOfWork.Context);
+            var visits = handler.Execute(query);
+            foreach (DriverDTO dt in visits)
+            {
+                Console.WriteLine($"FirstName:     '{dt.FirstName}'");
+                Console.WriteLine($"LicenceNumber:       '{dt.LicenceNumber}'");
+                Console.WriteLine($"SecondName:      '{dt.SecondName}'");
+                Console.WriteLine("--------------------------------------");
+            }
+        }
+
+        public void ShowCar()
+        {
+            Console.WriteLine("Cars");
+            Console.WriteLine("==============================\n");
+            GetAllCarQuery query = new GetAllCarQuery();
+            GetAllCarsQueryHandler handler = new GetAllCarsQueryHandler(this._unitOfWork.Context);
+            var visits = handler.Execute(query);
+            foreach (CarDTO car in visits)
+            {
+                Console.WriteLine($"CarNumber:     '{car.RegistrationNumber}'");
+                Console.WriteLine($"CurrentDistance:       '{car.CurrentDistance}'");
+                Console.WriteLine($"TotalDistance:      '{car.TotalDistance}'");
+                Console.WriteLine("--------------------------------------");
+            }
+
+        }
+        public Guid CreateCar(string registrationNumber, int TotalDist, Status status)
         {
             Guid carId = Guid.NewGuid();
             CreateCarCommand command = new CreateCarCommand()
@@ -39,7 +74,7 @@ namespace Car_Rental
                 FirstName = firstName,
                 LicenceNumber = licenceNumber,
                 SecondName = secondName,
-               
+
             };
             CreateDriverCommandHandler handler = new CreateDriverCommandHandler(this._unitOfWork);
             handler.Execute(command);
@@ -71,7 +106,7 @@ namespace Car_Rental
                 StartDateTime = startDateTime,
                 StopDateTime = stopDateTime,
                 Total = total,
-               
+
             };
             MakeReservationCommandHandler handler = new MakeReservationCommandHandler(this._unitOfWork);
             handler.Execute(command);
@@ -88,6 +123,6 @@ namespace Car_Rental
             ReturnCarCommandHandler handler = new ReturnCarCommandHandler(this._unitOfWork);
             handler.Execute(command);
         }
-   
+
     }
 }
